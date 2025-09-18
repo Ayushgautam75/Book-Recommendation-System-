@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOK RECOMMENDER SYSTEM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #1b1f3b;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      padding: 12px 20px;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .nav-link {
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-link:hover {
+      color: #00c853 !important;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #3e1f92, #2a5298);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      border-radius: 0 0 40px 40px;
+      margin-bottom: 40px;
+    }
+    .hero-title {
+      font-size: 50px;
+      font-weight: 800;
+    }
+
+    /* Book Card */
+    .card {
+      border: none;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: all 0.3s ease-in-out;
+      background: white;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+    .card img {
+      height: 280px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .book-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2a2a2a;
+    }
+    .book-author {
+      color: #6c757d;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">📚 Recommender Book</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link text-white" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/recommend">Recommend</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="hero-section">
+    <h1 class="hero-title">✨ Top Recommended Books of All Time ✨</h1>
+    <p class="lead">Discover the most popular books loved by readers worldwide</p>
+  </div>
+
+  <!-- Book Grid -->
+ <div class="container mt-4">
+  <form action="/recommend_books" method="post" class="d-flex">
+    <input type="text" name="user_input" class="form-control me-2" placeholder="📖 Enter a book name..." required>
+    <button class="btn btn-success" type="submit">🔍 Recommend</button>
+  </form>
+
+  {% if data %}
+    <h3 class="mt-4">📚 Recommended Books:</h3>
+    <div class="row">
+      {% for book in data %}
+        <div class="col-md-3">
+          <div class="card shadow-sm mb-3">
+            <img src="{{book[2]}}" class="card-img-top" alt="{{book[0]}}">
+            <div class="card-body">
+              <h5 class="card-title">{{book[0]}}</h5>
+              <p class="card-text">👨‍💻 Author: {{book[1]}}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% elif message %}
+    <div class="alert alert-warning mt-4 text-center">
+      {{ message }}
+    </div>
+  {% endif %}
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
